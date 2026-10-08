@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">{{ p.tagline }}</p>
+  <h1>{{ p.name }}</h1>
+  <p class="lead">{{ p.intro }}</p>
+  <div class="links">
+    <a class="btn" href="{{ url_for('video') }}">View Video Work</a>
+    <a class="btn ghost" href="{{ url_for('writing') }}">Read Writing Samples</a>
+  </div>
+</section>
+<section class="grid2">
+  <a class="panel" href="{{ url_for('video') }}">
+    <h2>Video Editing</h2>
+    <ul>{% for s in vs %}<li>{{ s }}</li>{% endfor %}</ul>
+    <span class="more">See projects &rarr;</span>
+  </a>
+  <a class="panel" href="{{ url_for('writing') }}">
+    <h2>Content Writing</h2>
+    <ul>{% for s in ws %}<li>{{ s }}</li>{% endfor %}</ul>
+    <span class="more">See samples &rarr;</span>
+  </a>
+</section>
+{% endblock %}
