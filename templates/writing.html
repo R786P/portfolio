@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Content Writing - {{ p.name }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <h1>Content Writing</h1>
+  <p class="lead">Clear, catchy copy in Hindi, Hinglish and English.</p>
+  <div class="tags">{% for s in ws %}<span>{{ s }}</span>{% endfor %}</div>
+</section>
+<section class="cards">
+  {% for w in samples %}
+  <article class="card">
+    <div class="body">
+      <p class="eyebrow">{{ w.type }}</p>
+      <h3>{{ w.title }}</h3>
+      <p>{{ w.text }}</p>
+    </div>
+  </article>
+  {% endfor %}
+</section>
+{% endblock %}
