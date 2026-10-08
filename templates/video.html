@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Video Editing - {{ p.name }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <h1>Video Editing</h1>
+  <p class="lead">Reels, YouTube videos and event films, edited in InShot with AI visuals.</p>
+  <div class="tags">{% for s in vs %}<span>{{ s }}</span>{% endfor %}</div>
+</section>
+<section class="cards">
+  {% for v in videos %}
+  <article class="card">
+    {% if v.thumb %}
+    <img class="thumb" src="{{ url_for('static', filename='thumbs/' ~ v.thumb) }}" alt="{{ v.title }}">
+    {% else %}
+    <div class="thumb ph">{{ v.title }}</div>
+    {% endif %}
+    <div class="body">
+      <p class="eyebrow">{{ v.type }}</p>
+      <h3>{{ v.title }}</h3>
+      <p>{{ v.desc }}</p>
+      {% if v.url %}<a class="btn small" href="{{ v.url }}" target="_blank" rel="noopener">Watch</a>
+      {% else %}<span class="soon">Link coming soon</span>{% endif %}
+    </div>
+  </article>
+  {% endfor %}
+</section>
+{% endblock %}
