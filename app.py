@@ -19,8 +19,8 @@ PROFILE = {
 # thumb: static/thumbs/ me file daalo aur yahan naam likho, e.g. "p1.jpg"
 # url: video ka Drive / Instagram / YouTube link
 VIDEOS = [
-    {"title": "Meri Reel 1", "type": "Reel", "desc": "AI visuals with voiceover.", "thumb": "f1.jpg", "url": "https://fb.watch/v/4QJ5Jtdbb/"},  # yahan Facebook reel ka link
-    {"title": "Meri Reel 2", "type": "Reel", "desc": "Short reel edited in InShot.", "thumb": "i1.jpg", "url": "https://www.instagram.com/reel/DcX3fMVMMCn/?exln=MXEzYzZzMXlwbWlueg=="},  # yahan Instagram reel ka link
+    {"title": "Meri Reel 1", "type": "Reel", "desc": "AI visuals with voiceover.", "thumb": "../f1.jpg", "url": "https://fb.watch/v/4QJ5Jtdbb/"},  # yahan Facebook reel ka link
+    {"title": "Meri Reel 2", "type": "Reel", "desc": "Short reel edited in InShot.", "thumb": "../i1.jpg", "url": "https://www.instagram.com/reel/DcX3fMVMMCn/?exln=MXEzYzZzMXlwbWlueg=="},  # yahan Instagram reel ka link
     {"title": "Diwali Highlights", "type": "Event film", "desc": "Festive highlight film with music sync.", "thumb": "", "url": "https://drive.google.com/file/d/1V61uI8AyWV4R6HHxrd05eL8VDGXEM4ls/view?usp=drivesdk"},
 ]
 
