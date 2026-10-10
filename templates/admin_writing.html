@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Admin - Writing{% endblock %}
+{% block content %}
+<section class="page-head">
+  <h1>Admin: Writing</h1>
+  <p class="lead"><a href="{{ url_for('admin') }}">Videos</a> &middot; <a href="{{ url_for('admin_agent') }}">AI Agent</a> &middot; <a href="{{ url_for('writing') }}">Site dekho</a> &middot; <a href="{{ url_for('admin_logout') }}">Logout</a></p>
+</section>
+{% for m in get_flashed_messages() %}<p class="flash">{{ m }}</p>{% endfor %}
+{% if not db_ok %}<p class="flash">DATABASE_URL set nahi hai, isliye save nahi hoga.</p>{% endif %}
+<form id="wform" method="post" action="{{ url_for('admin_w_add') }}" class="form" data-cloud="{{ cloud }}" data-preset="{{ preset }}">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+  <label>Heading (title)<input name="title" required maxlength="150"></label>
+  <label>Type<select name="wtype">{% for t in types %}<option>{{ t }}</option>{% endfor %}</select></label>
+  <label>Description (chhota summary, card pe dikhega)<textarea name="summary" rows="2" maxlength="400" placeholder="1-2 line mein article kis bare mein hai"></textarea></label>
+  <label>Article (yahan likho ya paste karo)<textarea class="notepad" name="body" rows="14" maxlength="30000" placeholder="Apna article yahan likho ya paste karo..."></textarea></label>
+  {% if cloud and preset %}<label>File upload (PDF, DOC, TXT, max 10MB, optional)<input type="file" id="afile" accept=".pdf,.doc,.docx,.txt"></label>{% endif %}
+  <label>Ya Google Doc / Drive link (optional)<input type="url" name="file_link" placeholder="https://"></label>
+  <input type="hidden" name="file_url" id="file_url">
+  <button class="btn" type="submit" id="go">Save</button>
+  <p id="status" class="soon"></p>
+</form>
+<h2 class="sub">Saved writing</h2>
+<section class="alist">
+  {% for a in items %}
+  <div class="arow">
+    <div class="ainfo"><b>{{ a.title }}</b><span>{{ a.type }}{% if a.file_url %} &middot; File attached{% endif %}</span></div>
+    <div class="abtn">
+      <a class="btn small ghost" href="{{ url_for('article', aid=a.id) }}">View</a>
+      <a class="btn small ghost" href="{{ url_for('admin_w_edit', aid=a.id) }}">Edit</a>
+      <form method="post" action="{{ url_for('admin_w_delete', aid=a.id) }}" onsubmit="return confirm('Delete karna hai?')">
+        <input type="hidden" name="csrf" value="{{ csrf }}"><button class="btn small danger" type="submit">Delete</button>
+      </form>
+    </div>
+  </div>
+  {% else %}<p class="soon">Abhi koi article nahi. Upar se pehla article add karo.</p>{% endfor %}
+</section>
+<script src="{{ url_for('static', filename='admin.js') }}"></script>
+{% endblock %}
