@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Agent{% endblock %}
+{% block content %}
+<section class="page-head">
+  <h1>AI Agent</h1>
+  <p class="lead"><a href="{{ url_for('admin') }}">Videos</a> &middot; <a href="{{ url_for('admin_writing') }}">Writing</a> &middot; <a href="{{ url_for('home') }}">Site dekho</a></p>
+</section>
+{% if not has_key %}<p class="flash">GEMINI_API_KEY Render me set nahi hai.</p>{% endif %}
+{% if not db_ok %}<p class="flash">DATABASE_URL set nahi hai.</p>{% endif %}
+<p class="soon" id="micnote">Mic dabao aur bolo, bolna khatam hote hi agent kaam shuru kar dega.</p>
+<div id="chat" class="chat" data-csrf="{{ csrf }}">
+  <div class="msg bot">Namaste Rahul! Bolo kya badalna hai: site ka text, videos ke title, articles likhna ya edit karna.</div>
+</div>
+<input type="file" id="cfile" accept="image/*" hidden>
+<div id="cprev" class="cprev" hidden><img id="cprevimg" alt=""><button type="button" id="cprevx" class="btn small ghost">Hatao</button></div>
+<div class="chips">
+  <button type="button" class="chip">Meri site ka overview batao</button>
+  <button type="button" class="chip">Tagline ko aur professional banao</button>
+  <button type="button" class="chip">Battery tips pe ek chhota article likh ke save karo</button>
+</div>
+<form id="cform" class="cform">
+  <textarea id="cin" rows="2" placeholder="Agent ko kaam batao..."></textarea>
+  <button class="btn ghost mic" type="button" id="cattach" aria-label="Screenshot bhejo">&#128206;</button>
+  <button class="btn ghost mic" type="button" id="cmic" aria-label="Bolkar likho">&#127908;</button>
+  <button class="btn" type="submit" id="csend">Send</button>
+</form>
+<script src="{{ url_for('static', filename='agent.js') }}"></script>
+{% endblock %}
