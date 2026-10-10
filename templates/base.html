@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ p.name }}{% endblock %} | {{ p.tagline }}</title>
+<meta name="description" content="{{ p.intro }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>:root{--acc:{{ accent }}}</style>
+<link rel="manifest" href="{{ url_for('manifest') }}">
+<meta name="theme-color" content="{{ accent }}">
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='icon-192.png') }}">
+<link rel="apple-touch-icon" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="{{ url_for('home') }}"><img class="logo" src="{{ url_for('static', filename='icon-192.png') }}" alt="" width="32" height="32">{{ p.name }}</a>
+  <nav>
+    <a href="{{ url_for('home') }}" class="{{ 'on' if request.endpoint == 'home' }}">Home</a>
+    <a href="{{ url_for('video') }}" class="{{ 'on' if request.endpoint == 'video' }}">Video Editing</a>
+    <a href="{{ url_for('writing') }}" class="{{ 'on' if request.endpoint == 'writing' }}">Content Writing</a>
+  </nav>
+</header>
+<main>{% block content %}{% endblock %}</main>
+<footer id="contact">
+  <h2>Let's work together</h2>
+  <div class="links">
+    {% if p.whatsapp %}<a class="btn" href="https://wa.me/{{ p.whatsapp }}" target="_blank" rel="noopener">WhatsApp</a>{% endif %}
+    {% if p.email %}<a class="btn" href="mailto:{{ p.email }}">Email</a>{% endif %}
+    {% if p.instagram %}<a class="btn ghost" href="{{ p.instagram }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
+    {% if p.linkedin %}<a class="btn ghost" href="{{ p.linkedin }}" target="_blank" rel="noopener">LinkedIn</a>{% endif %}
+    <button class="btn ghost" id="installBtn" type="button" hidden>Install App</button>
+    {% if p.drive_samples %}<a class="btn ghost" href="{{ p.drive_samples }}" target="_blank" rel="noopener">All Samples</a>{% endif %}
+  </div>
+  <p class="copy">&copy; {{ p.name }}</p>
+</footer>
+<script>
+(function(){
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){});});}
+var ev=null,b=document.getElementById('installBtn');
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();ev=e;if(b)b.hidden=false;});
+if(b)b.addEventListener('click',function(){if(!ev)return;ev.prompt();ev.userChoice.then(function(){ev=null;b.hidden=true;});});
+window.addEventListener('appinstalled',function(){if(b)b.hidden=true;});
+})();
+</script>
+<a class="admin-dot" href="{{ url_for('admin') }}" aria-label="Admin login" title="Admin"></a>
+<script>
+(function(){
+var d=document.querySelector('.admin-dot');if(!d)return;
+function place(x,y){d.style.left=x+'px';d.style.top=y+'px';d.style.right='auto';d.style.bottom='auto';}
+try{var s=JSON.parse(localStorage.getItem('dotpos'));if(s){place(Math.min(s.x,innerWidth-30),Math.min(s.y,innerHeight-30));}}catch(e){}
+var sx,sy,ox,oy,moved=false,drag=false;
+d.addEventListener('pointerdown',function(e){drag=true;moved=false;sx=e.clientX;sy=e.clientY;var r=d.getBoundingClientRect();ox=r.left;oy=r.top;try{d.setPointerCapture(e.pointerId);}catch(er){}});
+d.addEventListener('pointermove',function(e){if(!drag)return;var dx=e.clientX-sx,dy=e.clientY-sy;if(!moved&&Math.abs(dx)+Math.abs(dy)<8)return;moved=true;place(Math.min(Math.max(0,ox+dx),innerWidth-d.offsetWidth),Math.min(Math.max(0,oy+dy),innerHeight-d.offsetHeight));});
+d.addEventListener('pointerup',function(){drag=false;if(moved){try{localStorage.setItem('dotpos',JSON.stringify({x:parseInt(d.style.left),y:parseInt(d.style.top)}));}catch(er){}}});
+d.addEventListener('click',function(e){if(moved){e.preventDefault();moved=false;}});
+})();
+</script>
+</body>
+</html>
