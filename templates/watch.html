@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ v.title }} - {{ p.name }}{% endblock %}
+{% block content %}
+<section class="watch">
+  <div class="wmain">
+    <div class="stage">
+      {% if v.source == 'file' %}
+      <video controls playsinline preload="metadata" {% if v.thumb_url %}poster="{{ v.thumb_url }}"{% endif %} src="{{ v.url }}"></video>
+      {% elif v.embed %}
+      <iframe src="{{ v.embed|replace('autoplay=1','autoplay=0')|replace('autoplay=true','autoplay=false') }}" allow="fullscreen; encrypted-media" allowfullscreen title="{{ v.title }}"></iframe>
+      {% else %}
+      <div class="open"><a class="btn" href="{{ v.url }}" target="_blank" rel="noopener">Open video</a></div>
+      {% endif %}
+    </div>
+    <h1 class="wtitle">{{ v.title }}</h1>
+    <p class="eyebrow">{{ v.type }} &middot; {{ v.date }}</p>
+    {% if v.desc %}<div class="wdesc">{{ v.desc }}</div>{% endif %}
+    <a class="btn ghost small" href="{{ url_for('video') }}">&larr; All videos</a>
+  </div>
+  <aside class="side">
+    <h3>More videos</h3>
+    {% for o in others %}
+    <a class="row" href="{{ url_for('watch', vid=o.id) }}">
+      {% if o.thumb_url %}<img src="{{ o.thumb_url }}" alt="{{ o.title }}" loading="lazy">{% else %}<div class="rph"></div>{% endif %}
+      <div><b>{{ o.title }}</b><span>{{ o.type }}</span></div>
+    </a>
+    {% else %}<p class="soon">Aur videos jald aayenge.</p>{% endfor %}
+  </aside>
+</section>
+{% endblock %}
