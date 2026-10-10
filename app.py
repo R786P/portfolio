@@ -59,7 +59,7 @@ ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "")
 CLOUD_NAME = os.environ.get("CLOUDINARY_CLOUD_NAME", "")
 UPLOAD_PRESET = os.environ.get("CLOUDINARY_UPLOAD_PRESET", "")
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.8-flash")
 DB_URL = os.environ.get("DATABASE_URL", "")
 if DB_URL.startswith("postgres://"):
     DB_URL = DB_URL.replace("postgres://", "postgresql://", 1)
