@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Edit{% endblock %}
+{% block content %}
+<section class="page-head"><h1>Edit video</h1><p class="lead"><a href="{{ url_for('admin') }}">&larr; Back</a></p></section>
+<form id="editform" method="post" class="form" data-cloud="{{ cloud }}" data-preset="{{ preset }}">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+  {% if v.thumb_url %}<img class="curthumb" src="{{ v.thumb_url }}" alt="">{% endif %}
+  <label>Heading (title)<input name="title" required maxlength="120" value="{{ v.title }}"></label>
+  <label>Type<select name="vtype">{% for t in types %}<option {{ 'selected' if t == v.type }}>{{ t }}</option>{% endfor %}</select></label>
+  <label>Description<textarea name="description" rows="3" maxlength="500">{{ v.desc }}</textarea></label>
+  {% if cloud and preset %}<label>Naya thumbnail image<input type="file" id="tfile" accept="image/*"></label>{% endif %}
+  {% if v.source == 'file' %}
+  <label class="chk"><input type="checkbox" name="auto" value="1"> Thumbnail video ke frame se banao</label>
+  <label>Frame second<input type="number" name="thumb_sec" value="1" min="0" max="600"></label>
+  {% endif %}
+  <input type="hidden" name="thumb_url" id="thumb_url">
+  <button class="btn" type="submit" id="go">Save</button>
+  <p id="status" class="soon"></p>
+</form>
+<script src="{{ url_for('static', filename='admin.js') }}"></script>
+{% endblock %}
